@@ -1,0 +1,4 @@
+# Top level.
+include *.txt
+include *.md
+include *.py

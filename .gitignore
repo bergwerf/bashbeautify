@@ -1,6 +1,7 @@
 __pycache__
-\*.egg-info
+*.egg-info
 dist
 .directory
 .DS_Store
-\*.pyc
+*.pyc
+*~
