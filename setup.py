@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'bashbeautify',
-    version = '0.0.1',
+    version = '0.0.2',
     description = 'A beautifier for Bash shell scripts written in Python.',
     license = 'GPLv2',
     author = 'Paul Lutus',

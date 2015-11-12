@@ -154,6 +154,10 @@ class BeautifyBash:
         error |= self.beautify_file(path)
     sys.exit((0,1)[error])
 
+# CLI entry point
+def main():
+    BeautifyBash().main()
+
 # if not called as a module
 if(__name__ == '__main__'):
-  BeautifyBash().main()
+  main()
