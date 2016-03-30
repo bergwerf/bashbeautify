@@ -5,7 +5,8 @@ setup(
     version = '0.1.0',
     description = 'A beautifier for Bash shell scripts written in Python.',
     license = 'GPLv2',
-    author = 'Paul Lutus',
+    author = 'Herman Bergwerf',
+    author_email = 'hermanbergwerf@gmail.com',
     url = 'https://github.com/hermanbergwerf/bashbeautify',
     classifiers = [
         'Environment :: Console',
