@@ -113,9 +113,11 @@ class BeautifyBash:
               case_stack[-1] -= 1
           # an ad-hoc solution for the "else" keyword
           else_case = (0,-1)[re.search('^(else|elif)',test_record) != None]
+          # an ad-hoc solution for the standalone ";;"
+          double_comma_case = (0,+1)[re.search('^;;$',test_record) != None]
           net = inc - outc
           tab += min(net,0)
-          extab = tab + else_case
+          extab = tab + else_case + double_comma_case
           extab = max(0,extab)
           # indent the line unless it's empty
           if stripped_record:
