@@ -116,7 +116,11 @@ class BeautifyBash:
           tab += min(net,0)
           extab = tab + else_case
           extab = max(0,extab)
-          output.append((self.tab_str * self.tab_size * extab) + stripped_record)
+          # indent the line unless it's empty
+          if stripped_record:
+            output.append((self.tab_str * self.tab_size * extab) + stripped_record)
+          else:
+            output.append('')
           tab += max(net,0)
         if(defer_ext_quote):
           in_ext_quote = True
