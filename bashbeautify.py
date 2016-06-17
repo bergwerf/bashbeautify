@@ -64,16 +64,17 @@ class BeautifyBash:
       test_record = re.sub(r'\\.','',test_record)
       # remove '#' comments
       test_record = re.sub(r'(\A|\s)(#.*)','',test_record,1)
-      if(not in_here_doc):
-        if(re.search('<<-?',test_record)):
-          here_string = re.sub('.*<<-?\s*[\'|"]?([_|\w]+)[\'|"]?.*','\\1',stripped_record,1)
-          in_here_doc = (len(here_string) > 0)
+      # collapse ( ... ) or (( ... ))
+      test_record = re.sub(r'\([^()]*(\([^()]*\))*[^()]*\)','',test_record)
       if(in_here_doc): # pass on with no changes
         output.append(record)
         # now test for here-doc termination string
         if(re.search(here_string,test_record) and not re.search('<<',test_record)):
           in_here_doc = False
       else: # not in here doc
+        if(re.search('<<-?',test_record)):
+          here_string = re.sub('.*<<-?\s*[\'|"]?([-_|\w]+)[\'|"]?.*','\\1',test_record,1)
+          in_here_doc = (len(here_string) > 0)
         if(in_ext_quote):
           if(re.search(ext_quote_string,test_record)):
             # provide line after quotes
@@ -112,11 +113,17 @@ class BeautifyBash:
               case_stack[-1] -= 1
           # an ad-hoc solution for the "else" keyword
           else_case = (0,-1)[re.search('^(else|elif)',test_record) != None]
+          # an ad-hoc solution for the standalone ";;"
+          double_comma_case = (0,+1)[re.search('^;;$',test_record) != None]
           net = inc - outc
           tab += min(net,0)
-          extab = tab + else_case
+          extab = tab + else_case + double_comma_case
           extab = max(0,extab)
-          output.append((self.tab_str * self.tab_size * extab) + stripped_record)
+          # indent the line unless it's empty
+          if stripped_record:
+            output.append((self.tab_str * self.tab_size * extab) + stripped_record)
+          else:
+            output.append('')
           tab += max(net,0)
         if(defer_ext_quote):
           in_ext_quote = True

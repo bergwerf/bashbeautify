@@ -1,0 +1,27 @@
+#!/bin/bash
+
+ff()
+{
+  while read FILE; do
+    echo "$FILE"
+
+  done <<END
+	$(list "$@")
+	$((1 + 2))
+END
+}
+
+list()
+{
+  case $# in
+    0)
+      find . -type f
+      ;;
+
+    *)
+      echo "$@"
+      ;;
+  esac
+}
+
+ff $@
