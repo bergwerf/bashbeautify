@@ -1,1 +1,10 @@
 script: make check
+deploy:
+  provider: pypi
+  user: hermanbergwerf
+  password:
+    secure: aPuzHonflDewlVAM5e7YstSY13qNocPjFNhuG+R2iZ1vOHUNHcOa/DBKP/TaDkxxJwtGBpMO6vfs4Y2EoangbzH7BFfNrsoyBeCqmiC3SslJq2l0AoJYnTeLuLt58Pw6PkWo6ZCFFl/D1XLMJ4DKmaNVsM+P11hmo+OIZgP1QvttTwtLiMRCikv76ZCe26fzhaFOs39fVNpGiGkSaz99cELGAWZGBbx4cshxZP96peDMkk+yfyiozwL3QriiLWiSyKNS0cXLTz/RxMYhvj1Z9VfHVS+s5uKCtbEe6ZaBb5Kl6Z4CQkFTmFc0bsUt4NlEWlixUZgP9zMkd+yfo5m4zOB1C4OhmFbC0ygK7mMTDd4it+tx2BvL4spX9PART2JP34arj4NiWWCNMm9oEsIF42aGMPDXDi5V9JaRtCxBg3jXU8rdzoB5mZPoo8GFdmsaqJ2S13AlgP1qFR4nMoKMJjTFX3REYGDxn8sevaswHUY0m6ZIKxXuMBkN+T/7JkWQtKpmKs+33WORzK0jBIVPb6XBtew9gQbC/bXn2vqUTZkca7BpXMxK8F7svXHl2tMzCkryOzpDILH+09vEGPebbQANmyyasMHLBwlI2kPuKDYAy49Lh9oC/sG91Ith4xfSLp/NFFKeRhKrtvND1M4AbdGgdlQzMRpFzPdZ8ClZfEI=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: hermanbergwerf/bashbeautify
