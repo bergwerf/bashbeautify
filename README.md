@@ -1,5 +1,7 @@
 the Bash Script Beautifier
 ==========================
+[![Build Status](https://travis-ci.org/hermanbergwerf/bashbeautify.svg?branch=master)](https://travis-ci.org/hermanbergwerf/bashbeautify/)
+
 This is a wrapper of the Bash Script Beautifier by Paul Lutus for pip, the
 Python Package index. The Bash Script Beautifier is a beautifier for Bash shell
 scripts written in Python. I do not own any copyrights of this code, the
