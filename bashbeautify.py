@@ -111,8 +111,8 @@ class BeautifyBash:
             if(re.search(';;',test_record)):
               outc += 1
               case_stack[-1] -= 1
-          # an ad-hoc solution for the "else" keyword
-          else_case = (0,-1)[re.search('^(else|elif)',test_record) != None]
+          # an ad-hoc solution for the "else"/"elif" keyword
+          else_case = (0,-1)[re.search(r'^(else\b|elif\b.*\bthen$)',test_record) != None]
           # an ad-hoc solution for the standalone ";;"
           double_comma_case = (0,+1)[re.search('^;;$',test_record) != None]
           net = inc - outc
