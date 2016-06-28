@@ -1,0 +1,83 @@
+f()
+{
+  if [ "$1" = "x" ]; then
+    return 1
+  elif [ "$1" = "y" ]
+  then
+    return 2
+  elif [ "$1" = "z" ]; then
+    return 3
+  else
+    return 4
+  fi
+}
+
+g()
+{
+  if [ "$1" = "x" ]; then
+    if test -f "$2"
+    then
+      echo file
+    elif test -d "$2"; then
+      echo dir
+    elif test -e "$2"
+    then
+      echo exist
+    else
+      echo none
+    fi
+    return 1
+  elif [ "$1" = "y" ]
+  then
+    if test -f "$2";
+    then
+      echo file
+    elif test -d "$2"; then
+      echo dir
+    elif test -e "$2";
+    then
+      echo exist
+    else
+      echo none
+    fi
+    return 2
+  elif [ "$1" = "z" ]; then
+    if test -f "$2"; then
+      echo file
+    elif test -d "$2"; then
+      echo dir
+    elif test -e "$2";
+    then
+      echo exist
+    else
+      echo none
+    fi
+    return 3
+  else
+    if test -f "$2"; then
+      echo file
+    elif test -d "$2"; then
+      echo dir
+    elif test -e "$2";
+    then
+      echo exist
+    else
+      echo none
+    fi
+    return 4
+  fi
+}
+
+if [ $# -eq 0 ]; then
+  echo "Error"
+elif [ $# -eq 1 ]; then
+  f "$1"
+elif [ $# -eq 2 ];
+then
+  g "$1" "$2"
+elif [ $# -eq 3 ]; then
+  g "$@"
+else
+  echo "Good"
+fi
+echo "ret = $?"
