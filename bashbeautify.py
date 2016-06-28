@@ -55,7 +55,7 @@ class BeautifyBash:
       # collapse multiple quotes between ' ... '
       test_record = re.sub(r'\'.*?\'','',stripped_record)
       # collapse multiple quotes between " ... "
-      test_record = re.sub(r'".*?"','',test_record)
+      test_record = re.sub(r'(?<!\\)"(\\.|[^"\\])*?"','',test_record)
       # collapse multiple quotes between ` ... `
       test_record = re.sub(r'`.*?`','',test_record)
       # collapse multiple quotes between \` ... ' (weird case)
