@@ -52,8 +52,10 @@ class BeautifyBash:
       record = record.rstrip()
       stripped_record = record.strip()
 
+      # strip quotes from here-doc delimeter (<<-"NAME", etc)
+      test_record = re.sub(r'(<<-?\s*)["\']((?:\\.|[^"\\])*?)["\']',r'\1\2',stripped_record)
       # collapse multiple quotes between ' ... '
-      test_record = re.sub(r'\'.*?\'','',stripped_record)
+      test_record = re.sub(r'\'.*?\'','',test_record)
       # collapse multiple quotes between " ... "
       test_record = re.sub(r'(?<!\\)"(\\.|[^"\\])*?"','',test_record)
       # collapse multiple quotes between ` ... `
