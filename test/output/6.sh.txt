@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Test escape double quotes
+test-quotes()
+{
+  if [ "$1" = "yes" ]
+  then
+    echo $(date "+{\"%T\", \"%D\"}")
+  elif [ "$1" = "no" ]; then
+    echo $(date '+{"%H", "%M", "%S"}')
+  else
+    echo 'Hello "World"'
+  fi
+}
+
+test-quotes "$@"
+
+# Check here document delimeter in quotes
+here-doc()
+{
+  if [ "$1" = "yes" ]
+  then
+    echo == A
+    (cat << 'EOT'
+$(date)
+$(ls -1d *|wc -l)
+EOT
+    ) > /tmp/$$.output
+    echo end
+  elif [ "$1" = "no" ]; then
+    echo == B
+    (cat <<- "EOT"
+$(date)
+$(ls -1d * | wc -l)
+EOT
+    ) > /tmp/$$.output
+    echo end
+  else
+    echo == C
+    (cat <<- EOT
+$(date)
+$(ls -1d * | wc -l)
+EOT
+    ) > /tmp/$$.output
+    echo end
+  fi
+
+  echo "<<EOT"
+  echo hello
+  echo EOT
+
+  cat /tmp/$$.output
+  rm -f /tmp/$$.output
+}
+
+here-doc "$@"
