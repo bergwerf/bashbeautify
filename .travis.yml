@@ -1,3 +1,4 @@
+language: python
 script: make check
 deploy:
   provider: pypi
