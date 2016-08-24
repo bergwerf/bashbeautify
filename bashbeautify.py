@@ -44,6 +44,7 @@ class BeautifyBash:
     in_here_doc = False
     defer_ext_quote = False
     in_ext_quote = False
+    continued = False
     ext_quote_string = ''
     here_string = ''
     output = []
@@ -121,17 +122,22 @@ class BeautifyBash:
           tab += min(net,0)
           extab = tab + else_case + double_comma_case
           extab = max(0,extab)
-          # indent the line unless it's empty
-          if stripped_record:
-            output.append((self.tab_str * self.tab_size * extab) + stripped_record)
+          if(continued):
+            # pass on unchanged
+            output.append(record)
           else:
-            output.append('')
+            # indent the line unless it's empty
+            if stripped_record:
+              output.append((self.tab_str * self.tab_size * extab) + stripped_record)
+            else:
+              output.append('')
           tab += max(net,0)
         if(defer_ext_quote):
           in_ext_quote = True
           defer_ext_quote = False
         if(re.search(r'\bcase\b',test_record)):
           case_stack.append(0)
+      continued = record.endswith('\\')
       line += 1
     error = (tab != 0)
     if(error):
