@@ -1,0 +1,46 @@
+#!/bin/bash
+
+f()
+{
+  # Check indent works with continuation lines
+  echo "hello" \
+       "f1"
+  echo "hello  \
+f2"
+  # Check spaces are untouched
+  echo "hello\
+   f3"
+  # Check TABs are untouched
+  echo "hello\
+	f4"
+  echo "hello\
+		f5"
+
+  ls -1 | sort |\
+    xargs wc -l |\
+    sort -n
+
+  if [ $# -eq 0 ] || \
+     [ $# -eq 1 ]; then
+    echo "hi #$#!"
+  elif [ $# -eq 2 ] || \
+       [ $# -eq 3 ] || \
+       [ $# -ge 4 ]; then
+    # Make sure to fix indent after continuation lines
+    echo "hi #$#!"
+    case "$#" in
+      0) echo zero
+        ;;
+      1|\
+      2|\
+      3)
+        echo three
+        ;;
+      *)
+        echo whatever
+        ;;
+    esac
+  fi
+}
+
+f "$@"
