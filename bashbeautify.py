@@ -27,8 +27,8 @@ PVERSION = '1.0'
 class BeautifyBash:
 
   def __init__(self):
-    self.tab_str = ' '
-    self.tab_size = 2
+    self.tab_str = '\t'
+    self.tab_size = 1
 
   def read_file(self,fp):
     with open(fp) as f:
@@ -155,7 +155,7 @@ class BeautifyBash:
       result,error = self.beautify_string(data,path)
       if(data != result):
         # make a backup copy
-        self.write_file(path + '~',data)
+        # self.write_file(path + '~',data)
         self.write_file(path,result)
     return error
 
