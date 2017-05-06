@@ -155,7 +155,7 @@ class BeautifyBash:
       result,error = self.beautify_string(data,path)
       if(data != result):
         # make a backup copy
-        self.write_file(path + '~',data)
+        # self.write_file(path + '~',data)
         self.write_file(path,result)
     return error
 
