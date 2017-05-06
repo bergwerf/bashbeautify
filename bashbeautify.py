@@ -27,8 +27,8 @@ PVERSION = '1.0'
 class BeautifyBash:
 
   def __init__(self):
-    self.tab_str = ' '
-    self.tab_size = 2
+    self.tab_str = '\t'
+    self.tab_size = 1
 
   def read_file(self,fp):
     with open(fp) as f:
