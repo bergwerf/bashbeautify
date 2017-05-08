@@ -47,6 +47,7 @@ class BeautifyBash:
     continued = False
     ext_quote_string = ''
     here_string = ''
+    last_if_indent = ''
     output = []
     line = 1
     for record in re.split('\n',data):
@@ -128,6 +129,9 @@ class BeautifyBash:
           else:
             # indent the line unless it's empty
             if stripped_record:
+              # fix up comment line aligned at the same column with following else or elif line
+              if stripped_record.startswith('#') and last_if_indent == re.match(r'^\s*',record).group():
+                extab = max(0, extab - 1)
               output.append((self.tab_str * self.tab_size * extab) + stripped_record)
             else:
               output.append('')
@@ -137,6 +141,12 @@ class BeautifyBash:
           defer_ext_quote = False
         if(re.search(r'\bcase\b',test_record)):
           case_stack.append(0)
+        # remember the indent of "if" or "elif"
+        m = re.search(r'^(\s*)(if|elif|then)\b',record)
+        if m:
+          last_if_indent = m.group(1)
+        elif re.search(r'^(\s*)(else|fi)\b',record):
+          last_if_indent = ''
       continued = record.endswith('\\')
       line += 1
     error = (tab != 0)
