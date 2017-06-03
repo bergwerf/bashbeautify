@@ -21,6 +21,7 @@
 #**************************************************************************
 
 import re, sys
+import argparse
 
 PVERSION = '1.0'
 
@@ -29,6 +30,7 @@ class BeautifyBash:
   def __init__(self):
     self.tab_str = ' '
     self.tab_size = 2
+    self.do_backup = True
 
   def read_file(self,fp):
     with open(fp) as f:
@@ -47,6 +49,7 @@ class BeautifyBash:
     continued = False
     ext_quote_string = ''
     here_string = ''
+    last_if_indent = ''
     output = []
     line = 1
     for record in re.split('\n',data):
@@ -128,6 +131,9 @@ class BeautifyBash:
           else:
             # indent the line unless it's empty
             if stripped_record:
+              # fix up comment line aligned at the same column with following else or elif line
+              if stripped_record.startswith('#') and last_if_indent == re.match(r'^\s*',record).group():
+                extab = max(0, extab - 1)
               output.append((self.tab_str * self.tab_size * extab) + stripped_record)
             else:
               output.append('')
@@ -137,6 +143,12 @@ class BeautifyBash:
           defer_ext_quote = False
         if(re.search(r'\bcase\b',test_record)):
           case_stack.append(0)
+        # remember the indent of "if" or "elif"
+        m = re.search(r'^(\s*)(if|elif|then)\b',record)
+        if m:
+          last_if_indent = m.group(1)
+        elif re.search(r'^(\s*)(else|fi)\b',record):
+          last_if_indent = ''
       continued = record.endswith('\\')
       line += 1
     error = (tab != 0)
@@ -153,25 +165,39 @@ class BeautifyBash:
     else: # named file
       data = self.read_file(path)
       result,error = self.beautify_string(data,path)
-      if(data != result):
+      if(data != result) and self.do_backup:
         # make a backup copy
         self.write_file(path + '~',data)
         self.write_file(path,result)
     return error
 
-  def main(self):
+  def main(self,args):
+    self.tab_str = args.tab_str
+    self.tab_size = args.tab_size
+    self.do_backup = not args.no_backup
     error = False
-    sys.argv.pop(0)
-    if(len(sys.argv) < 1):
+    if(len(args.files) < 1):
       sys.stderr.write('usage: shell script filenames or \"-\" for stdin.\n')
     else:
-      for path in sys.argv:
+      for path in args.files:
         error |= self.beautify_file(path)
     sys.exit((0,1)[error])
 
 # CLI entry point
 def main():
-    BeautifyBash().main()
+    parser = argparse.ArgumentParser(description='Bash Script Beautifier.')
+    parser.add_argument('--tab-str', '-c', metavar='CHAR',
+                        help='Tab string (default: " ")', default=' ')
+    parser.add_argument('--tab-size', '-t', metavar='TAB', type=int,
+                        help='Tab size (default: 2)', default=2)
+    parser.add_argument('--no-backup', '-n', action='store_true',
+                        help='Do not backup file before overwrite', default=False)
+    parser.add_argument('files', metavar='FILE', nargs='+',
+
+                        help='Filename (use "-" for stdin)')
+    args = parser.parse_args()
+
+    BeautifyBash().main(args)
 
 # if not called as a module
 if(__name__ == '__main__'):

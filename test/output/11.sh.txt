@@ -1,0 +1,60 @@
+#!/bin/bash
+
+f()
+{
+  # comment
+  if [ $# -eq 1 ]; then
+    echo A
+    # nothing to do
+  elif [ $# -eq 2 ];
+  then
+    echo B
+    # comment
+  # elif
+  # more comment
+  elif [ $# -eq 3 ]; then
+    echo C
+    #other comment
+  # the rest
+  else
+    echo D
+  fi
+}
+
+g()
+{
+  # comment
+  if [ $# -eq 0 ]; then
+    echo A
+  # nothing to do
+  elif [ $# -eq 2 ];
+  then
+    echo B
+  # elif
+  # more comment
+  elif [ $# -eq 3 ]; then
+    echo C
+    #other comment
+  # the rest
+  else
+    echo D
+  fi
+}
+
+if [ "$1" = "f" ]; then
+  f "$@"
+# else
+# case
+elif [ "$1" = "g" ]; then
+  g "$@"
+# else
+# case
+elif [ "$1" = "h" ];
+then
+  echo $#
+  # comment
+#else
+#case
+else
+  echo else
+fi
