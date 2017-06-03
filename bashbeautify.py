@@ -186,6 +186,7 @@ class BeautifyBash:
 # CLI entry point
 def main():
     parser = argparse.ArgumentParser(description='Bash Script Beautifier.')
+
     parser.add_argument('--tab-str', '-c', metavar='CHAR',
                         help='Tab string (default: " ")', default=' ')
     parser.add_argument('--tab-size', '-t', metavar='TAB', type=int,
@@ -193,8 +194,8 @@ def main():
     parser.add_argument('--no-backup', '-n', action='store_true',
                         help='Do not backup file before overwrite', default=False)
     parser.add_argument('files', metavar='FILE', nargs='+',
-
                         help='Filename (use "-" for stdin)')
+
     args = parser.parse_args()
 
     BeautifyBash().main(args)
