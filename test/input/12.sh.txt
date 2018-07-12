@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# Test here-string ('<<<') is properly formatted
+#
+
+cat_file()
+{
+  file="$1"
+  cat - $file <<<"$*"
+   return
+}
+
+f()
+{
+  if grep -q "txt" <<< "$*"; then
+    echo "$* contains txt!"
+  fi
+  if grep -q "txt" <<< "$*"
+    then
+    echo "$* contains txt!"
+  fi
+}
+
+g()
+{
+  while read file; do
+    echo "$file"
+  done <<<$(ls -1)
+}
+
+read -r -a P <<< "${PATH}" || true
+read -r -a Q <<< "${PATH}"\
+  || true
+
+cat_file /etc/profile
+
+f "example txt"
+g

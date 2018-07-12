@@ -72,6 +72,8 @@ class BeautifyBash:
       test_record = re.sub(r'(\A|\s)(#.*)','',test_record,1)
       # collapse ( ... ) or (( ... ))
       test_record = re.sub(r'\([^()]*(\([^()]*\))*[^()]*\)','',test_record)
+      # here-strings
+      test_record = re.sub(r'<<<','',test_record)
       if(in_here_doc): # pass on with no changes
         output.append(record)
         # now test for here-doc termination string
