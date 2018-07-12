@@ -8,4 +8,4 @@ deploy:
   on:
     tags: true
     distributions: sdist bdist_wheel
-    repo: hermanbergwerf/bashbeautify
+    repo: bergwerf/bashbeautify
